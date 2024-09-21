@@ -10,6 +10,9 @@ import { fetchWalletAndBalances } from '@/store/userSlice';
 import { showNotification } from '@/store/notificationSlice';
 import { ClipboardIcon } from '@heroicons/react/24/outline';
 import PositionPanel from './components/PositionPanel';
+import { TypeAnimation } from 'react-type-animation';
+
+
 
 export default function Home() {
   const dispatch = useDispatch<AppDispatch>();
@@ -49,6 +52,25 @@ export default function Home() {
       <div className="flex-grow flex items-center justify-center flex-col max-w-md w-full mx-auto bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-xl shadow-xl p-6">
         {!isLoggedIn && 
           (<div className='flex flex-col space-y-4 gap-4'>
+            <div className='font-bold text-2xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-600'>
+              The NEXT
+            </div>
+            <div className='font-bold text-2xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-600'>
+              <TypeAnimation
+                sequence={[
+                  'AI Powered MPC Wallet',
+                  2000,
+                  'Secure MPC Wallet',
+                  2000,
+                  'Decentralized MPC Wallet',
+                  2000,
+                ]}
+                wrapper="span"
+                speed={50}
+                style={{ display: 'inline-block' }}
+                repeat={Infinity}
+              />
+            </div>
             <TelegramLogin />
             {/* <button
               className="flex items-center justify-center w-full py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"

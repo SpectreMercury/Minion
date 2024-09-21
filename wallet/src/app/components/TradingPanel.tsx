@@ -40,7 +40,7 @@ const TradingPanel: React.FC = () => {
     dispatch(addPosition({
       id: Date.now().toString(),
       pair: `${pair.pair}`,
-      amount: amount * 0.99,
+      amount: amount / 0.01,
       apy: parseFloat(pair.apy),
       startTime: Date.now(),
       token0Symbol: pair.pair.split('/')[0],
