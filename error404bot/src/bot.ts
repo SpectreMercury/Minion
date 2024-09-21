@@ -14,7 +14,6 @@ const bot = new TelegramBot(token, {polling: true});
 const API_BASE_URL = 'http://localhost:8080';
 
 interface WalletResponse {
-  // 根据实际响应调整这个接口
   id: string;
   address: string;
 }
@@ -32,7 +31,7 @@ interface BalanceResponse {
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   const userId = msg.from?.id;
-  bot.sendMessage(chatId, `欢迎使用钱包查询机器人! 您的Telegram ID是: ${userId}\n使用 /wallet 创建或获取您的钱包，使用 /balance 查询余额。`);
+  bot.sendMessage(chatId, `Welcome to the Wallet Query Bot! \nUse /wallet to create or get your wallet, use /balance to check your balance.`);
 });
 
 bot.onText(/\/wallet/, async (msg) => {
@@ -40,7 +39,7 @@ bot.onText(/\/wallet/, async (msg) => {
   const userId = msg.from?.id;
   
   if (!userId) {
-    bot.sendMessage(chatId, '无法获取您的用户ID，请重试。');
+    bot.sendMessage(chatId, 'Unable to get your user ID, please try again.');
     return;
   }
 
@@ -48,10 +47,10 @@ bot.onText(/\/wallet/, async (msg) => {
     const response = await axios.post<WalletResponse>(`${API_BASE_URL}/wallets`, { telegramId: userId });
     const walletAddress = response.data.address;
     const walletId = response.data.id;
-    bot.sendMessage(chatId, `您的钱包地址是: ${walletAddress}`);
+    bot.sendMessage(chatId, `Your wallet address is: ${walletAddress}`);
   } catch (error) {
-    console.error(`创建/获取钱包时出错:`, error);
-    bot.sendMessage(chatId, `创建/获取钱包时出错: ${error instanceof Error ? error.message : '未知错误'}`);
+    console.error(`Error creating/getting wallet:`, error);
+    bot.sendMessage(chatId, `Error creating/getting wallet: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
 });
 
@@ -60,23 +59,23 @@ bot.onText(/\/balance/, async (msg) => {
   const userId = msg.from?.id;
   
   if (!userId) {
-    bot.sendMessage(chatId, '无法获取您的用户ID，请重试。');
+    bot.sendMessage(chatId, 'Unable to get your user ID, please try again.');
     return;
   }
 
   try {
     const response = await axios.get<BalanceResponse>(`${API_BASE_URL}/balance/${userId}`);
     const balances = response.data.tokenBalances;
-    let message = "您的钱包余额:\n\n";
+    let message = "Your wallet balance:\n\n";
     balances.forEach(balance => {
-      message += `代币: ${balance.token.name}\n`;
-      message += `数量: ${balance.amount}\n`;
-      message += `区块链: ${balance.token.blockchain}\n\n`;
+      message += `Token: ${balance.token.name}\n`;
+      message += `Amount: ${balance.amount}\n`;
+      message += `Blockchain: ${balance.token.blockchain}\n\n`;
     });
     bot.sendMessage(chatId, message);
   } catch (error) {
-    console.error(`获取余额时出错:`, error);
-    bot.sendMessage(chatId, `获取余额时出错: ${error instanceof Error ? error.message : '未知错误'}`);
+    console.error(`Error getting balance:`, error);
+    bot.sendMessage(chatId, `Error getting balance: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
 });
 
