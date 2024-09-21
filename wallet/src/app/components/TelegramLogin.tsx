@@ -12,6 +12,7 @@ const TelegramLogin: React.FC = () => {
 
   const handleTelegramResponse = async(telegramUser: TelegramUser) => {
     if (verifyTelegramHash(telegramUser)) {
+      console.log('telegramUser', telegramUser);
       dispatch(setUser(telegramUser));
       dispatch(showNotification({ message: 'Login Success!', type: 'success' }));
     } else {

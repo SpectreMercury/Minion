@@ -28,13 +28,25 @@ interface Wallet {
   address: string;
 }
 
+interface Position {
+  id: string;
+  pair: string;
+  amount: number;
+  apy: number;
+  startTime: number;
+  token0Symbol: string;
+  token1Symbol: string;
+}
+
 interface UserState {
+  photo_url: string;
   user: TelegramUser | null;
   isLoggedIn: boolean;
   wallet: Wallet | null;
   tokenBalances: TokenBalance[];
   tokenBalancesLoading: boolean;
   tokenBalancesError: string | null;
+  positions: Position[];
 }
 
 const initialState: UserState = {
@@ -44,6 +56,8 @@ const initialState: UserState = {
   tokenBalances: [],
   tokenBalancesLoading: false,
   tokenBalancesError: null,
+  photo_url: '',
+  positions: [],
 };
 
 export const fetchWalletAndBalances = createAsyncThunk(
@@ -79,6 +93,9 @@ const userSlice = createSlice({
       state.wallet = null;
       state.tokenBalances = [];
     },
+    addPosition: (state, action: PayloadAction<Position>) => {
+      state.positions.push(action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -98,5 +115,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, logout } = userSlice.actions;
+export const { setUser, logout, addPosition } = userSlice.actions;
 export default userSlice.reducer;

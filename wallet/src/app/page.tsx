@@ -9,6 +9,7 @@ import TradingPanel from "./components/TradingPanel";
 import { fetchWalletAndBalances } from '@/store/userSlice';
 import { showNotification } from '@/store/notificationSlice';
 import { ClipboardIcon } from '@heroicons/react/24/outline';
+import PositionPanel from './components/PositionPanel';
 
 export default function Home() {
   const dispatch = useDispatch<AppDispatch>();
@@ -49,7 +50,7 @@ export default function Home() {
         {!isLoggedIn && 
           (<div className='flex flex-col space-y-4 gap-4'>
             <TelegramLogin />
-            <button
+            {/* <button
               className="flex items-center justify-center w-full py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
             >
               <svg className="icon mr-2" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
@@ -78,7 +79,7 @@ export default function Home() {
                 <path d="M645.289723 165.758826C677.460161 122.793797 701.865322 62.036894 693.033384 0c-52.607627 3.797306-114.089859 38.61306-149.972271 84.010072-32.682435 41.130375-59.562245 102.313942-49.066319 161.705521 57.514259 1.834654 116.863172-33.834427 151.294929-79.956767zM938.663644 753.402663c-23.295835 52.820959-34.517089 76.415459-64.511543 123.177795-41.855704 65.279538-100.905952 146.644295-174.121433 147.198957-64.980873 0.725328-81.748754-43.30636-169.982796-42.751697-88.234042 0.46933-106.623245 43.605024-171.732117 42.965029-73.130149-0.682662-129.065752-74.026142-170.964122-139.348347-117.11917-182.441374-129.44975-396.626524-57.172928-510.545717 51.327636-80.895427 132.393729-128.212425 208.553189-128.212425 77.482118 0 126.207106 43.519692 190.377318 43.519692 62.292892 0 100.137957-43.647691 189.779989-43.647691 67.839519 0 139.732344 37.802399 190.889315 103.03927-167.678812 94.036667-140.543004 339.069598 28.885128 404.605134z" fill="#0B0B0A"></path>
               </svg>
               使用 Apple ID 登录
-            </button>
+            </button> */}
           </div>)
         }
         {isLoggedIn && (tokenBalancesLoading ? <SkeletonLoader /> : (
@@ -119,8 +120,20 @@ export default function Home() {
               >
                 Trading
               </button>
+              <button
+                onClick={() => setActiveTab('positions')}
+                className={`flex-1 py-2 text-center transition-colors ${
+                  activeTab === 'positions'
+                    ? 'bg-purple-200 text-purple-800'
+                    : 'bg-purple-400 text-purple-100 hover:bg-purple-500'
+                }`}
+              >
+                Positions
+              </button>
             </div>
-            {activeTab === 'balance' ? <TokenDisplay /> : <TradingPanel />}
+            {activeTab === 'balance' && <TokenDisplay />}
+            {activeTab === 'trading' && <TradingPanel />}
+            {activeTab === 'positions' && <PositionPanel />}
           </div>
         ))}
       </div>
