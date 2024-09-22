@@ -8,3 +8,4 @@ Minion is a smart wallet designed for mass adoption, supporting iOS, Android, we
 
 ## Demo
 
+![watch the video](https://youtu.be/TEhPWtTVT1w?si=nXWthA3iDJ6_BIv3)
