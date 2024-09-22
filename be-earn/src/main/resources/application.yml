@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/ac_hack
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  web:
+    cors:
+      allowed-origins: "*"
+      allowed-methods: "*"
+      allowed-headers: "*"
+      allow-credentials: true
+      max-age: 3600 # 可选，预检请求的有效期
+
+
+#server:
+#  port: 443
+#  ssl:
+#    key-store: classpath:keystore.p12
+#    key-store-password: 111111
+#    key-store-type: PKCS12
+#    key-alias: springboot
